@@ -20,7 +20,11 @@ def guardar_contactos(contactos):
         json.dump(contactos, archivo, indent=4, ensure_ascii=False)
 
 def agregar_contacto(contactos):
-    nombre = input("Nombre del Contacto").strip()
+    for clave, valor in contactos.items():
+        print(clave, valor)
+    id = 1
+   
+    nombre = input("Nombre del Contacto: ").strip()
 
     if nombre in contactos:
         print("El contacto ya existe")
@@ -28,10 +32,25 @@ def agregar_contacto(contactos):
     
     telefono = input("Telefono: ").strip()
     email = input("Email: ").strip()
+    print("Direccion del contacto:")
+    calle = input("Calle: ").strip()
+    numero = input("Numero: ").strip()
+    cod_postal = input("Codigo postal: ").strip()
+    ciudad = input("Ciudad: ").strip()
+    pais = input("Pais: ").strip()
 
-    contactos[nombre] = {
+    contactos = {
+        "id" : id,
+        "nombre": nombre,
         "telefono": telefono,
-        "email" : email
+        "email" : email,
+        "direccion" : {
+            "calle": calle,
+            "numero": numero,
+            "codigo_postal": cod_postal, 
+            "ciudad": ciudad,
+            "pais": pais,
+        }
     }
 
     guardar_contactos(contactos)
@@ -46,10 +65,17 @@ def mostrar_contactos(contactos):
     print("\nLista de contactos")
     print("-" * 30)
 
-    for nombre, datos in contactos.items():
-        print(f"Nombre: {nombre}")
-        print(f"Telefono: {datos['telefono']}")
-        print(f"Email: {datos['email']}")
+    for clave, valor in contactos.items():
+        print(f"ID: {valor['id']}")
+        print(f"Nombre: {valor['nombre']}")
+        print(f"Telefono: {valor['telefono']}")
+        print(f"Email: {valor['email']}")
+        print("Direccion:")
+        print(f"  Calle: {valor['direccion']['calle']}")
+        print(f"  Numero: {valor['direccion']['numero']}")
+        print(f"  Codigo Postal: {valor['direccion']['codigo_postal']}")
+        print(f"  Ciudad: {valor['direccion']['ciudad']}")
+        print(f"  Pais: {valor['direccion']['pais']}")
         print("-" * 30)
 
 

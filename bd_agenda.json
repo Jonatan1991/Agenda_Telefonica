@@ -1,14 +1,13 @@
 {
-    "Jona": {
-        "telefono": "dsfsd",
-        "email": "dsfsdf"
-    },
-    "dfsdf": {
-        "telefono": "sdfcxzc",
-        "email": "sefds"
-    },
-    "": {
-        "telefono": "",
-        "email": ""
+    "id": 1,
+    "nombre": "pepe",
+    "telefono": "44345345",
+    "email": "pepe@gmail.com",
+    "direccion": {
+        "calle": "perro",
+        "numero": "2",
+        "codigo_postal": "34553",
+        "ciudad": "Mad",
+        "pais": "esp"
     }
 }
