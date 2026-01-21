@@ -26,12 +26,26 @@ def agregar_contacto(contactos):
         print("El contacto ya existe")
         return
     
+    id = input("ID: ").strip()
     telefono = input("Telefono: ").strip()
     email = input("Email: ").strip()
+    print("Direccion: ")
+    calle = input("Calle: ").strip()
+    numero = input("Numero: ").strip()
+    municipio = input("Municipio: ").strip()
+    cp = input("CP: ").strip()
 
-    contactos[nombre] = {
+
+    contactos[id] = {
+        "nombre": nombre,
         "telefono": telefono,
-        "email" : email
+        "email" : email,
+        "direccion": {
+            "calle": calle,
+            "numero" : numero,
+            "municipio": municipio,
+            "cp" : cp,
+        }
     }
 
     guardar_contactos(contactos)
@@ -46,11 +60,18 @@ def mostrar_contactos(contactos):
     print("\nLista de contactos")
     print("-" * 30)
 
-    for nombre, datos in contactos.items():
-        print(f"Nombre: {nombre}")
-        print(f"Telefono: {datos['telefono']}")
+    for id, datos in contactos.items():
+        print(f"ID: {id}")
+        print(f"Nombre: {datos['nombre']}")
+        print(f"Teléfono: {datos['telefono']}")
         print(f"Email: {datos['email']}")
+        print("Dirección:")
+        print(f"  Calle: {datos['direccion']['calle']}")
+        print(f"  Número: {datos['direccion']['numero']}")
+        print(f"  Municipio: {datos['direccion']['municipio']}")
+        print(f"  CP: {datos['direccion']['cp']}")
         print("-" * 30)
+
 
 
 def menu():

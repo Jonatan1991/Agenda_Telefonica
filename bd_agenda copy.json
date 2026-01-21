@@ -3,8 +3,8 @@
         "nombre": "Jonatan",
         "telefono": "dsfsd",
         "email": "dsfsdf",
-        "direccion": {
-            "calle": "mendivil",
+        "direccion" : {
+            "calle" : "mendivil",
             "numero": 14,
             "cp": 28038,
             "municipio": "Madrid"
@@ -14,8 +14,8 @@
         "nombre": "Jonatan",
         "telefono": "sdfcxzc",
         "email": "sefds",
-        "direccion": {
-            "calle": "mendivil 1",
+        "direccion" : {
+            "calle" : "mendivil 1",
             "numero": 14,
             "cp": 28038,
             "municipio": "Madrid 1"
@@ -25,22 +25,11 @@
         "nombre": "Jonatan",
         "telefono": "",
         "email": "",
-        "direccion": {
-            "calle": "mendivil 2",
+        "direccion" : {
+            "calle" : "mendivil 2",
             "numero": 14,
             "cp": 28038,
             "municipio": "Madrid 2"
-        }
-    },
-    "4": {
-        "nombre": "qwe",
-        "telefono": "5435345555",
-        "email": "dfsdf",
-        "direccion": {
-            "calle": "fghfgh",
-            "numero": "567657",
-            "municipio": "fdgdfv",
-            "cp": "345543"
         }
     }
 }
