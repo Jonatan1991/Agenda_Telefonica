@@ -42,5 +42,27 @@
             "municipio": "fdgdfv",
             "cp": "345543"
         }
+    },
+    "5": {
+        "nombre": "Pedro",
+        "telefono": "9990303",
+        "email": "peppe@fds.com",
+        "direccion": {
+            "calle": "popo",
+            "numero": "111",
+            "municipio": "mand",
+            "cp": "99903"
+        }
+    },
+    "6": {
+        "nombre": "julio",
+        "telefono": "89930398493",
+        "email": "jul@fsdf.com",
+        "direccion": {
+            "calle": "23",
+            "numero": "32",
+            "municipio": "23",
+            "cp": "32"
+        }
     }
 }

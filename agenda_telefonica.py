@@ -20,13 +20,22 @@ def guardar_contactos(contactos):
         json.dump(contactos, archivo, indent=4, ensure_ascii=False)
 
 def agregar_contacto(contactos):
+    if not contactos:
+        return 1  # Si está vacío, el primer ID es 1
+    
+    # Convertir las claves a enteros y obtener el máximo
+    max_id = max([int(i) for i in contactos.keys()])
+    id = max_id + 1
+    print (id)
+
     nombre = input("Nombre del Contacto").strip()
 
     if nombre in contactos:
         print("El contacto ya existe")
         return
     
-    id = input("ID: ").strip()
+    
+   
     telefono = input("Telefono: ").strip()
     email = input("Email: ").strip()
     print("Direccion: ")
