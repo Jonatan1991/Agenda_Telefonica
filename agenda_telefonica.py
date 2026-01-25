@@ -28,14 +28,13 @@ def agregar_contacto(contactos):
     id = max_id + 1
     print (id)
 
-    nombre = input("Nombre del Contacto").strip()
+    nombre = input("Nombre: ").strip()
 
-    if nombre in contactos:
-        print("El contacto ya existe")
-        return
+    for contacto in contactos:
+        if contacto[nombre] in contactos:
+            print("El contacto ya existe")
+            return
     
-    
-   
     telefono = input("Telefono: ").strip()
     email = input("Email: ").strip()
     print("Direccion: ")
@@ -81,14 +80,26 @@ def mostrar_contactos(contactos):
         print(f"  CP: {datos['direccion']['cp']}")
         print("-" * 30)
 
+def buscar_contacto(contactos):
+    id = input("id a buscar: ").strip()
 
+    if id not in contactos:
+        print("❌ Contacto no encontrado.")
+        return
+
+    datos = contactos[id]
+    print("\n🔍 CONTACTO ENCONTRADO")
+    print(f"Nombre   : {id}")
+    print(f"Teléfono : {datos['telefono']}")
+    print(f"Email    : {datos['email']}")
 
 def menu():
     print("""
 📞 AGENDA TELEFÓNICA
 1. Añadir contacto
 2. Mostrar contactos
-3. Salir
+3. Buscar contactos
+4. Salir
 """)
     
 def main():
@@ -103,6 +114,8 @@ def main():
         elif opcion == "2":
             mostrar_contactos(contactos)
         elif opcion == "3":
+            buscar_contacto(contactos)
+        elif opcion == "4":
              print("👋 Saliendo de la agenda...")
              break
         else:
