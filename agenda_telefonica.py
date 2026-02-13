@@ -8,6 +8,7 @@ def cargar_contactos():
     if not os.path.exists(ARCHIVO_DATOS):
         return{}
     
+    #with open garantiza que el arhcivo se cierre correctamrente a l finalizar la operacion
     with open(ARCHIVO_DATOS, "r", encoding="utf-8") as archivo:
         try:
             return json.load(archivo)
@@ -89,9 +90,18 @@ def buscar_contacto(contactos):
 
     datos = contactos[id]
     print("\n🔍 CONTACTO ENCONTRADO")
-    print(f"Nombre   : {id}")
+    print(f"Nombre   : {datos["nombre"]}")
     print(f"Teléfono : {datos['telefono']}")
     print(f"Email    : {datos['email']}")
+
+def actualizar_contacto(contacto):
+    print("actualizar")
+    return
+
+def eliminar_contacto(contacto):
+    print("eliminar")
+    return
+
 
 def menu():
     print("""
@@ -99,7 +109,9 @@ def menu():
 1. Añadir contacto
 2. Mostrar contactos
 3. Buscar contactos
-4. Salir
+4. Actualizar contacto
+5. Eliminar contacto
+6. Salir
 """)
     
 def main():
@@ -116,6 +128,10 @@ def main():
         elif opcion == "3":
             buscar_contacto(contactos)
         elif opcion == "4":
+            actualizar_contacto(contactos)
+        elif opcion == "5":
+           eliminar_contacto(contactos)
+        elif opcion == "6":
              print("👋 Saliendo de la agenda...")
              break
         else:
