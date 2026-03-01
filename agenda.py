@@ -82,6 +82,16 @@ class AgendaTelefonica:
         self.ultimo_id += 1
         id_contacto = str(self.ultimo_id)
 
+        # 🔹 Validación del nombre
+        if not nombre or len(nombre.strip()) < 2:
+            raise ValueError("El nombre debe tener al menos 2 caracteres")
+        # 🔹 Validación del telefono
+        # Luego hay que poner una exprecion regular para validar el telefono, pero quizas con la interfaz
+        if not telefono.isdigit():
+            raise ValueError("El teléfono solo debe contener números")
+        if len(telefono) < 9 or len(telefono) > 15:
+            raise ValueError("El teléfono debe tener entre 9 y 15 dígitos")
+        
         # Creamos el contacto
         self.contactos[id_contacto] = {
             "nombre": nombre,

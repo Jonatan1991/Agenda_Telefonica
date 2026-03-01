@@ -37,11 +37,13 @@ def iniciar_consola():
                 "municipio": input("Municipio: ")
             }
 
-            nuevo_id = agenda.agregar_contacto(
+            try:
+                nuevo_id = agenda.agregar_contacto(
                 nombre, telefono, email, direccion
-            )
-
-            print(f"✅ Contacto añadido con ID {nuevo_id}")
+                )
+                print(f"✅ Contacto añadido con ID {nuevo_id}")
+            except ValueError as error:
+                print("❌ Error:", error)
 
         # Mostrar contactos
         elif opcion == "2":
