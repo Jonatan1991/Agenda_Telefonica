@@ -1,5 +1,8 @@
 import json
 import os
+import re
+
+from utils.validaciones import validar_email, validar_nombre, validar_telefono
 
 # ============================================================
 # CLASE PRINCIPAL: AgendaTelefonica
@@ -83,14 +86,13 @@ class AgendaTelefonica:
         id_contacto = str(self.ultimo_id)
 
         # 🔹 Validación del nombre
-        if not nombre or len(nombre.strip()) < 2:
-            raise ValueError("El nombre debe tener al menos 2 caracteres")
+        # Validaciones externas
+        nombre = validar_nombre(nombre)
         # 🔹 Validación del telefono
-        # Luego hay que poner una exprecion regular para validar el telefono, pero quizas con la interfaz
-        if not telefono.isdigit():
-            raise ValueError("El teléfono solo debe contener números")
-        if len(telefono) < 9 or len(telefono) > 15:
-            raise ValueError("El teléfono debe tener entre 9 y 15 dígitos")
+        telefono = validar_telefono(telefono)
+        # 🔹 Validación del email
+        email = validar_email(email)
+        
         
         # Creamos el contacto
         self.contactos[id_contacto] = {
@@ -152,6 +154,13 @@ class AgendaTelefonica:
 
         for clave, valor in datos.items():
             if valor is not None:
+                if clave == "nombre":
+                    valor == validar_nombre(valor)
+                elif clave == "telefono":
+                    valor == validar_telefono(valor)
+                elif clave == "email":
+                    valor == validar_email(valor)
+
                 if clave == "direccion" and isinstance(valor, dict):
                     # Reemplaza la dirección completa o actualiza campos
                     self.contactos[id_contacto].setdefault("direccion", {}).update(valor)
