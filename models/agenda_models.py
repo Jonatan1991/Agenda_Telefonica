@@ -1,6 +1,5 @@
 import json
 import os
-import re
 
 from utils.validaciones import validar_email, validar_nombre, validar_telefono
 
@@ -20,7 +19,7 @@ class AgendaTelefonica:
     # Constructor de la clase
     # Se ejecuta automáticamente al crear la agenda
     # --------------------------------------------------------
-    def __init__(self, archivo_datos="bd_agenda.json"):
+    def __init__(self, archivo_datos="data/bd_agenda.json"):
         # Ruta del archivo donde se guardan los contactos
         self.archivo_datos = archivo_datos
 

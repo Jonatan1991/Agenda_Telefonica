@@ -1,4 +1,4 @@
-from interfaz_consola import iniciar_consola
+from views.consola_view import iniciar_consola
 
 # ------------------------------------------------------------
 # Ejecutar programa

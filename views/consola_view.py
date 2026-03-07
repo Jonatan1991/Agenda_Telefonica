@@ -2,7 +2,7 @@
 # INTERFAZ DE CONSOLA (solo para interactuar con la agenda)
 # ============================================================
 
-from agenda import AgendaTelefonica
+from controllers.agenda_controller import AgendaController
 
 def menu():
     """Muestra el menú principal."""
@@ -18,7 +18,7 @@ def menu():
         
 def iniciar_consola():
     """Punto de entrada del programa."""
-    agenda = AgendaTelefonica()
+    agenda = AgendaController()
 
     while True:
         menu()
