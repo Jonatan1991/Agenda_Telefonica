@@ -1,4 +1,5 @@
 import re
+from utils.formateadores import normalizar_telefono
 
 # ==========================================
 # VALIDACIONES DE LA AGENDA
@@ -14,15 +15,25 @@ def validar_nombre(nombre):
 
 
 def validar_telefono(telefono):
-    """Valida que el teléfono tenga entre 9 y 15 dígitos."""
+    """
+    Valida que el teléfono tenga entre 9 y 15 dígitos. 
+    y lo formateamos para que todos tengan el mismo formato
+    """
 
-    telefono = telefono.replace(" ", "")
+    telefono = normalizar_telefono(telefono)
+
+    if telefono.startswith("+"):
+        numero = telefono[1:]
+    else:
+        numero = telefono
 
     if not telefono.isdigit():
         raise ValueError("El teléfono solo puede contener números")
 
-    if len(telefono) < 9 or len(telefono) > 15:
+    if len(numero) < 9 or len(numero) > 15:
         raise ValueError("El teléfono debe tener entre 9 y 15 dígitos")
+
+    return telefono
 
     return telefono
 
