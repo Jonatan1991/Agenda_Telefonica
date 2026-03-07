@@ -1,5 +1,5 @@
 import re
-from utils.formateadores import normalizar_telefono
+from utils.formateadores import normalizar_telefono, capitalizar_nombre
 
 # ==========================================
 # VALIDACIONES DE LA AGENDA
@@ -8,8 +8,11 @@ from utils.formateadores import normalizar_telefono
 def validar_nombre(nombre):
     """Valida que el nombre tenga al menos 2 caracteres."""
     
+
     if not nombre or len(nombre.strip()) < 2:
         raise ValueError("El nombre debe tener al menos 2 caracteres")
+    
+    nombre = capitalizar_nombre(nombre)
     
     return nombre.strip()
 
@@ -34,9 +37,6 @@ def validar_telefono(telefono):
         raise ValueError("El teléfono debe tener entre 9 y 15 dígitos")
 
     return telefono
-
-    return telefono
-
 
 def validar_email(email):
     """Valida el formato de un email."""

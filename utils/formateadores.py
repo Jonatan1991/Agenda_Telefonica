@@ -8,3 +8,11 @@ def normalizar_telefono(telefono):
     telefono = telefono.strip()
     telefono = re.sub(r"[ \-()]", "", telefono)
     return telefono
+
+def capitalizar_nombre(nombre):
+    """
+    capitalizar el nombre
+    """
+    nombre = nombre.strip()
+    return nombre.title()
+
