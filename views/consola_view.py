@@ -47,18 +47,19 @@ def iniciar_consola():
 
         # Mostrar contactos
         elif opcion == "2":
-            agenda.mostrar_contactos()
+            contactos = agenda.obtener_contactos()
+            agenda.agenda.mostrar_contactos(contactos)
 
         # Buscar
         elif opcion == "3":
             texto = input("Contacto a buscar: ")
-            resultados = agenda.buscar_por_nombre(texto)
-            agenda.mostrar_contactos(resultados)
+            resultados = agenda.buscar_contacto(texto)
+            agenda.agenda.mostrar_contactos(resultados)
 
         # Editar
         elif opcion == "4":
             id_contacto = input("ID del contacto: ")
-            if id_contacto not in agenda.contactos:
+            if id_contacto not in agenda.agenda.contactos:
                 print("❌ ID no encontrado")
             else:
                 print("(deje vacío para no modificar)")
@@ -78,17 +79,22 @@ def iniciar_consola():
                 if municipio is not None: direccion["municipio"] = municipio
                 if cp is not None: direccion["cp"] = cp
 
-                success = agenda.editar_contacto(
-                    id_contacto,
-                    nombre=nombre,
-                    telefono=telefono,
-                    email=email,
-                    direccion=direccion if direccion else None,
-                )
-                if success:
-                    print("✏️ Contacto editado")
-                else:
-                    print("❌ No se pudo editar")
+                try:
+                    success = agenda.editar_contacto(
+                        id_contacto,
+                        nombre=nombre,
+                        telefono=telefono,
+                        email=email,
+                        direccion=direccion if direccion else None,
+                    )
+
+                    if success:
+                        print("✏️ Contacto editado")
+                    else:
+                        print("❌ No se pudo editar")
+
+                except ValueError as error:
+                    print("❌ Error:", error)
            
 
         # Eliminar

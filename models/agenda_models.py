@@ -154,11 +154,11 @@ class AgendaTelefonica:
         for clave, valor in datos.items():
             if valor is not None:
                 if clave == "nombre":
-                    valor == validar_nombre(valor)
+                    valor = validar_nombre(valor)
                 elif clave == "telefono":
-                    valor == validar_telefono(valor)
+                    valor = validar_telefono(valor)
                 elif clave == "email":
-                    valor == validar_email(valor)
+                    valor = validar_email(valor)
 
                 if clave == "direccion" and isinstance(valor, dict):
                     # Reemplaza la dirección completa o actualiza campos
