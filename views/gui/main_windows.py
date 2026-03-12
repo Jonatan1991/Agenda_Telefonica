@@ -31,10 +31,10 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         self.tabla = QTableWidget()
-        self.tabla.setColumnCount(3)
+        self.tabla.setColumnCount(4)
         self.tabla.setHorizontalHeaderLabels(
             # ["ID", "Nombre", "Teléfono", "Email"]
-            ["Nombre", "Teléfono", "Email"]
+            ["ID","Nombre", "Teléfono", "Email"]
         )
 
         layout.addWidget(self.tabla)
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
 
         for fila, (id_contacto, datos) in enumerate(contactos.items()):
 
-            # self.tabla.setItem(fila, 0, QTableWidgetItem(id_contacto))
+            self.tabla.setItem(fila, 0, QTableWidgetItem(id_contacto))
             self.tabla.setItem(fila, 1, QTableWidgetItem(datos["nombre"]))
             self.tabla.setItem(fila, 2, QTableWidgetItem(datos["telefono"]))
             self.tabla.setItem(fila, 3, QTableWidgetItem(datos["email"]))
