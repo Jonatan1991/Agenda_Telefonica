@@ -100,6 +100,10 @@ class MainWindow(QMainWindow):
 
         contacto = contactos.get(id_contacto)
 
+        if not contacto:
+            return
+
+        contacto = contacto.copy()
         contacto["id"] = id_contacto
 
         dialogo = ContactoDialog(

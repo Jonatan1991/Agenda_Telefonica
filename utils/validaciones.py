@@ -30,7 +30,7 @@ def validar_telefono(telefono):
     else:
         numero = telefono
 
-    if not telefono.isdigit():
+    if not numero.isdigit():
         raise ValueError("El teléfono solo puede contener números")
 
     if len(numero) < 9 or len(numero) > 15:
