@@ -3,7 +3,8 @@ from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
-    QPushButton
+    QPushButton,
+    QMessageBox
 )
 
 from controllers.agenda_controller import AgendaController
@@ -44,6 +45,8 @@ class MainWindow(QMainWindow):
         self.btn_refrescar = QPushButton("Actualizar")
 
         self.btn_agregar.clicked.connect(self.abrir_formulario)
+        self.btn_editar.clicked.connect(self.editar_contacto)
+        self.btn_eliminar.clicked.connect(self.eliminar_contacto)
 
         layout_botones.addWidget(self.btn_agregar)
         layout_botones.addWidget(self.btn_editar)
@@ -70,4 +73,58 @@ class MainWindow(QMainWindow):
         dialogo = ContactoDialog(self.controller)
 
         if dialogo.exec():
+            self.cargar_contactos()
+
+    def obtener_id_seleccionado(self):
+
+        fila = self.tabla.currentRow()
+
+        if fila == -1:
+            return None
+
+        id_item = self.tabla.item(fila, 0)
+
+        if id_item:
+            return id_item.text()
+
+        return None
+    
+    def editar_contacto(self):
+
+        id_contacto = self.obtener_id_seleccionado()
+
+        if not id_contacto:
+            return
+
+        contactos = self.controller.obtener_contactos()
+
+        contacto = contactos.get(id_contacto)
+
+        contacto["id"] = id_contacto
+
+        dialogo = ContactoDialog(
+            self.controller,
+            contacto
+        )
+
+        if dialogo.exec():
+            self.cargar_contactos()
+
+    def eliminar_contacto(self):
+
+        id_contacto = self.obtener_id_seleccionado()
+
+        if not id_contacto:
+            return
+
+        confirmacion = QMessageBox.question(
+            self,
+            "Eliminar contacto",
+            "¿Seguro que quieres eliminar este contacto?"
+        )
+
+        if confirmacion == QMessageBox.Yes:
+
+            self.controller.eliminar_contacto(id_contacto)
+
             self.cargar_contactos()

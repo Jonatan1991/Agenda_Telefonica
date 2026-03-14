@@ -83,12 +83,24 @@ class ContactoDialog(QDialog):
 
         try:
 
-            self.controller.agregar_contacto(
-                nombre,
-                telefono,
-                email,
-                direccion
-            )
+            if self.contacto:
+
+                self.controller.editar_contacto(
+                    self.contacto["id"],
+                    nombre=nombre,
+                    telefono=telefono,
+                    email=email,
+                    direccion=direccion
+                )
+
+            else:
+
+                self.controller.agregar_contacto(
+                    nombre,
+                    telefono,
+                    email,
+                    direccion
+                )
 
             self.accept()
 
@@ -99,3 +111,17 @@ class ContactoDialog(QDialog):
                 "Error",
                 str(error)
             )
+
+            
+    def _cargar_datos(self):
+
+        self.input_nombre.setText(self.contacto["nombre"])
+        self.input_telefono.setText(self.contacto["telefono"])
+        self.input_email.setText(self.contacto["email"])
+
+        direccion = self.contacto.get("direccion", {})
+
+        self.input_calle.setText(direccion.get("calle", ""))
+        self.input_numero.setText(direccion.get("numero", ""))
+        self.input_municipio.setText(direccion.get("municipio", ""))
+        self.input_cp.setText(direccion.get("cp", ""))
