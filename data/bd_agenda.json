@@ -44,5 +44,16 @@
             "municipio": "rrr"
         },
         "id": "11"
+    },
+    "12": {
+        "nombre": "Galy",
+        "telefono": "77834849349",
+        "email": "galy@aguila.medel",
+        "direccion": {
+            "calle": "1",
+            "numero": "1",
+            "municipio": "1",
+            "cp": "1"
+        }
     }
 }
