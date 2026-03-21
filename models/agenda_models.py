@@ -2,6 +2,7 @@ import json
 import os
 
 from utils.validaciones import validar_email, validar_nombre, validar_telefono
+from models.contacto_models import Contacto
 
 # ============================================================
 # CLASE PRINCIPAL: AgendaTelefonica
@@ -77,7 +78,8 @@ class AgendaTelefonica:
 
     #_______CRUD_________
 
-    def agregar_contacto(self, nombre, telefono, email, direccion):
+    # def agregar_contacto(self, nombre, telefono, email, direccion):
+    def agregar_contacto(self, contacto: Contacto):
         """Añade un nuevo contacto. `direccion` es un diccionario.
         Ejemplo de `direccion`: {"calle": ..., "numero": ..., "municipio": ..., "cp": ...}
         """
@@ -86,20 +88,24 @@ class AgendaTelefonica:
 
         # 🔹 Validación del nombre
         # Validaciones externas
-        nombre = validar_nombre(nombre)
+        contacto.nombre = validar_nombre(contacto.nombre)
         # 🔹 Validación del telefono
-        telefono = validar_telefono(telefono)
+        contacto.telefono = validar_telefono(contacto.telefono)
         # 🔹 Validación del email
-        email = validar_email(email)
+        contacto.email = validar_email(contacto.email)
         
         
         # Creamos el contacto
-        self.contactos[id_contacto] = {
-            "nombre": nombre,
-            "telefono": telefono,
-            "email": email,
-            "direccion": direccion,
-        }
+        # self.contactos[id_contacto] = {
+        #     "nombre": nombre,
+        #     "telefono": telefono,
+        #     "email": email,
+        #     "direccion": direccion,
+        # }
+
+        #aqui cambio todo porque uso el modelo Contacto, 
+        # donde converti a contacto en un objeto el cual me quita un millon de codigo y es lo mas correcto
+        self.contactos[id_contacto] = contacto.to_dict() #y aqui lo convierto en un diccionario para poderlo guardar en el jSon
 
         # Guardamos cambios
         self.guardar()
@@ -144,27 +150,20 @@ class AgendaTelefonica:
             print("-" * 30)
 
 
-    def editar_contacto(self, id_contacto, **datos):
+    def editar_contacto(self, id_contacto, contacto: Contacto):
         """Edita un contacto existente.
-        Solo modifica los campos que se pasen. Soporta `direccion` completo.
+        Reemplaza el contacto completo con el objeto Contacto proporcionado.
         """
         if id_contacto not in self.contactos:
             return False
 
-        for clave, valor in datos.items():
-            if valor is not None:
-                if clave == "nombre":
-                    valor = validar_nombre(valor)
-                elif clave == "telefono":
-                    valor = validar_telefono(valor)
-                elif clave == "email":
-                    valor = validar_email(valor)
+        # Validar los campos del contacto
+        contacto.nombre = validar_nombre(contacto.nombre)
+        contacto.telefono = validar_telefono(contacto.telefono)
+        contacto.email = validar_email(contacto.email)
 
-                if clave == "direccion" and isinstance(valor, dict):
-                    # Reemplaza la dirección completa o actualiza campos
-                    self.contactos[id_contacto].setdefault("direccion", {}).update(valor)
-                else:
-                    self.contactos[id_contacto][clave] = valor
+        # Reemplazar el contacto completo
+        self.contactos[id_contacto] = contacto.to_dict()
 
         self.guardar()
         return True

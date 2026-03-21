@@ -8,6 +8,8 @@ from PySide6.QtWidgets import (
     QMessageBox
 )
 
+from models.contacto_models import Contacto
+
 
 class ContactoDialog(QDialog):
 
@@ -83,24 +85,23 @@ class ContactoDialog(QDialog):
 
         try:
 
+            contacto_obj = Contacto(
+                nombre=nombre,
+                telefono=telefono,
+                email=email,
+                direccion=direccion
+            )
+
             if self.contacto:
 
                 self.controller.editar_contacto(
                     self.contacto["id"],
-                    nombre=nombre,
-                    telefono=telefono,
-                    email=email,
-                    direccion=direccion
+                    contacto_obj
                 )
 
             else:
 
-                self.controller.agregar_contacto(
-                    nombre,
-                    telefono,
-                    email,
-                    direccion
-                )
+                self.controller.agregar_contacto(contacto_obj)
 
             self.accept()
 

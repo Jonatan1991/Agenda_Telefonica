@@ -1,15 +1,4 @@
 {
-    "6": {
-        "nombre": "julio",
-        "telefono": "89930398493",
-        "email": "jul@fsdf.com",
-        "direccion": {
-            "calle": "23",
-            "numero": "32",
-            "municipio": "23",
-            "cp": "32"
-        }
-    },
     "7": {
         "nombre": "Julian",
         "telefono": "44403023",
@@ -55,28 +44,5 @@
             "municipio": "rrr"
         },
         "id": "11"
-    },
-    "14": {
-        "nombre": "Ony",
-        "telefono": "49599383487",
-        "email": "onyleidis@gmail.com",
-        "direccion": {
-            "calle": "14",
-            "numero": "1",
-            "municipio": "134",
-            "cp": "23"
-        },
-        "id": "14"
-    },
-    "16": {
-        "nombre": "Novirmrbe",
-        "telefono": "9384938390",
-        "email": "nov@coo.com",
-        "direccion": {
-            "calle": "quinta",
-            "numero": "4",
-            "municipio": "Mad",
-            "cp": "28038"
-        }
     }
 }

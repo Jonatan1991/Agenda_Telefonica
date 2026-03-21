@@ -1,5 +1,5 @@
 import re
-from utils.formateadores import normalizar_telefono, capitalizar_nombre
+from utils.formateadores import normalizar_telefono, capitalizar_texto
 
 # ==========================================
 # VALIDACIONES DE LA AGENDA
@@ -12,7 +12,7 @@ def validar_nombre(nombre):
     if not nombre or len(nombre.strip()) < 2:
         raise ValueError("El nombre debe tener al menos 2 caracteres")
     
-    nombre = capitalizar_nombre(nombre)
+    nombre = capitalizar_texto(nombre)
     
     return nombre.strip()
 
