@@ -6,9 +6,9 @@ class TablaContactos(QTableWidget):
     def __init__(self):
         super().__init__()
 
-        self.setColumnCount(7)
+        self.setColumnCount(6)
         self.setHorizontalHeaderLabels(
-            ["No.", "Nombre", "Apellido 1", "Apellido 2", "Teléfono", "Email", "Dirección"]
+            ["No.", "Nombre", "Apellidos", "Teléfono", "Email", "Dirección"]
         )
 
         header = self.horizontalHeader()
@@ -60,10 +60,11 @@ class TablaContactos(QTableWidget):
             direccion = datos.get("direccion", {})
             direccion_formato = self._formatear_direccion(direccion)
 
+            apellidos = f"{datos.get("apellido_1", "")} {datos.get("apellido_2", "")}"
+
             self.setItem(fila, 0, QTableWidgetItem(id_contacto))
             self.setItem(fila, 1, QTableWidgetItem(datos.get("nombre", "")))
-            self.setItem(fila, 2, QTableWidgetItem(datos.get("apellido_1", "")))
-            self.setItem(fila, 3, QTableWidgetItem(datos.get("apellido_2", "")))
-            self.setItem(fila, 4, QTableWidgetItem(datos.get("telefono", "")))
-            self.setItem(fila, 5, QTableWidgetItem(datos.get("email", "")))
-            self.setItem(fila, 6, QTableWidgetItem(direccion_formato))
+            self.setItem(fila, 2, QTableWidgetItem(apellidos))
+            self.setItem(fila, 3, QTableWidgetItem(datos.get("telefono", "")))
+            self.setItem(fila, 4, QTableWidgetItem(datos.get("email", "")))
+            self.setItem(fila, 5, QTableWidgetItem(direccion_formato))
