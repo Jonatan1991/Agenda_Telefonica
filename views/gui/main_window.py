@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         self.controller = AgendaController()
 
         self.setWindowTitle("Agenda Telefónica")
-        self.setMinimumSize(900, 600)
+        self.setMinimumSize(1200, 600)
 
         self._crear_interfaz()
 

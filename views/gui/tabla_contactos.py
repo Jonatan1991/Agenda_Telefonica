@@ -8,7 +8,7 @@ class TablaContactos(QTableWidget):
 
         self.setColumnCount(12)
         self.setHorizontalHeaderLabels(
-            ["ID", "Nombre", "Apellido 1", "Apellido 2", "Teléfono", "Email", "Calle", "Número", "Piso", "Puerta", "CP", "Provincia"]
+            ["No.", "Nombre", "Apellido 1", "Apellido 2", "Teléfono", "Email", "Calle", "Número", "Piso", "Puerta", "CP", "Provincia"]
         )
 
         header = self.horizontalHeader()

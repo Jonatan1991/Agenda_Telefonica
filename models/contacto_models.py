@@ -1,12 +1,14 @@
 from models.direccion_models import Direccion
 
 class Contacto:
-    def __init__(self, nombre, apellido_1, apellido_2, telefono, email, direccion: Direccion):
+    def __init__(self, nombre, apellido_1, apellido_2, telefono, email, direccion):
         self.nombre =nombre
         self.apellido_1 =apellido_1
         self.apellido_2 =apellido_2
         self.telefono = telefono
         self.email = email
+        if isinstance(direccion, dict):
+            direccion = Direccion.from_dict(direccion)
         self.direccion = direccion
 
     def to_dict(self):

@@ -96,6 +96,8 @@ class AgendaTelefonica:
         # 🔹 Validación del email
         contacto.email = validar_email(contacto.email)
         
+
+        
         
         # Creamos el contacto
         # self.contactos[id_contacto] = {

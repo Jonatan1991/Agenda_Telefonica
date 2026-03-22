@@ -1,12 +1,14 @@
+from utils.formateadores import capitalizar_texto
+
 class Direccion:
     def __init__(self, calle, numero, piso, puerta, escalera, cp, provincia):
-        self.calle = calle
+        self.calle = capitalizar_texto(calle)
         self.numero = numero
         self.piso = piso
         self.puerta = puerta
         self.escalera = escalera
         self.cp = cp
-        self.provincia = provincia
+        self.provincia = capitalizar_texto(provincia)
 
     def to_dict(self):
         return{
