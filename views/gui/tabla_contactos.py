@@ -6,9 +6,9 @@ class TablaContactos(QTableWidget):
     def __init__(self):
         super().__init__()
 
-        self.setColumnCount(13)
+        self.setColumnCount(7)
         self.setHorizontalHeaderLabels(
-            ["No.", "Nombre", "Apellido 1", "Apellido 2", "Teléfono", "Email", "Calle", "Número", "Piso", "Puerta", "Escalera", "CP", "Provincia"]
+            ["No.", "Nombre", "Apellido 1", "Apellido 2", "Teléfono", "Email", "Dirección"]
         )
 
         header = self.horizontalHeader()
@@ -17,6 +17,40 @@ class TablaContactos(QTableWidget):
 
         self.setSortingEnabled(True)
 
+    def _formatear_direccion(self, direccion):
+        """Formatea dirección de forma limpia, omitiendo campos vacíos."""
+        if not direccion:
+            return "N/A"
+        
+        partes = []
+        
+        # Calle y número juntos
+        if direccion.get("calle"):
+            calle_num = f"{direccion['calle']} {direccion.get('numero', '')}".strip()
+            partes.append(calle_num )
+        
+        # Piso
+        if direccion.get("piso"):
+            partes.append(f"{direccion['piso']}")
+        
+        # Puerta con etiqueta corta
+        if direccion.get("puerta"):
+            partes.append(f"Pta. {direccion['puerta']}")
+        
+        # Escalera con etiqueta corta
+        if direccion.get("escalera"):
+            partes.append(f"Esc. {direccion['escalera']}")
+        
+        # CP
+        if direccion.get("cp"):
+            partes.append(f"{direccion['cp']}")
+        
+        # Provincia/Municipio
+        if direccion.get("provincia"):
+            partes.append(f"{direccion['provincia']}")
+        
+        return ", ".join(partes) if partes else "N/A"
+
     def cargar_datos(self, contactos):
 
         self.setRowCount(len(contactos))
@@ -24,6 +58,7 @@ class TablaContactos(QTableWidget):
         for fila, (id_contacto, datos) in enumerate(contactos.items()):
 
             direccion = datos.get("direccion", {})
+            direccion_formato = self._formatear_direccion(direccion)
 
             self.setItem(fila, 0, QTableWidgetItem(id_contacto))
             self.setItem(fila, 1, QTableWidgetItem(datos.get("nombre", "")))
@@ -31,10 +66,4 @@ class TablaContactos(QTableWidget):
             self.setItem(fila, 3, QTableWidgetItem(datos.get("apellido_2", "")))
             self.setItem(fila, 4, QTableWidgetItem(datos.get("telefono", "")))
             self.setItem(fila, 5, QTableWidgetItem(datos.get("email", "")))
-            self.setItem(fila, 6, QTableWidgetItem(direccion.get("calle", "")))
-            self.setItem(fila, 7, QTableWidgetItem(direccion.get("numero", "")))
-            self.setItem(fila, 8, QTableWidgetItem(direccion.get("piso", "")))
-            self.setItem(fila, 9, QTableWidgetItem(direccion.get("puerta", "")))
-            self.setItem(fila, 10, QTableWidgetItem(direccion.get("escalera", "")))
-            self.setItem(fila, 11, QTableWidgetItem(direccion.get("cp", "")))
-            self.setItem(fila, 12, QTableWidgetItem(direccion.get("provincia", "")))
+            self.setItem(fila, 6, QTableWidgetItem(direccion_formato))
