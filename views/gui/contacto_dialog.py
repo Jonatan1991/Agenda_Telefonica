@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
 
 from models.contacto_models import Contacto
 from models.direccion_models import Direccion
+from models.contacto_info_models import InfoContactos
 
 
 class ContactoDialog(QDialog):
@@ -37,8 +38,9 @@ class ContactoDialog(QDialog):
         self.input_nombre = QLineEdit()
         self.input_apellido_1 = QLineEdit()
         self.input_apellido_2 = QLineEdit()
-        self.input_telefono = QLineEdit()
         self.input_email = QLineEdit()
+        self.input_telefono_1 = QLineEdit()
+        self.input_nota_1 = QLineEdit()
 
         self.input_calle = QLineEdit()
         self.input_numero = QLineEdit()
@@ -48,11 +50,23 @@ class ContactoDialog(QDialog):
         self.input_cp = QLineEdit()
         self.input_provincia = QLineEdit()
 
+        self.input_telefono_2 = QLineEdit()
+        self.input_nota_2 = QLineEdit()
+        self.input_telefono_3 = QLineEdit()
+        self.input_nota_3 = QLineEdit()
+        self.input_telefono_4 = QLineEdit()
+        self.input_nota_4 = QLineEdit()
+        self.input_auxiliar = QLineEdit()
+        self.input_observaciones = QLineEdit()
+
+
+
         form.addRow("Nombre", self.input_nombre)
         form.addRow("Apellido 1", self.input_apellido_1)
         form.addRow("Apellido 2", self.input_apellido_2)
-        form.addRow("Teléfono", self.input_telefono)
         form.addRow("Email", self.input_email)
+        form.addRow("Teléfono 1", self.input_telefono_1)
+        form.addRow("Nota 1", self.input_nota_1)
 
         form.addRow("Calle", self.input_calle)
         form.addRow("Número", self.input_numero)
@@ -61,6 +75,17 @@ class ContactoDialog(QDialog):
         form.addRow("Escalera", self.input_escalera)
         form.addRow("CP", self.input_cp)
         form.addRow("Provincia", self.input_provincia)
+
+        form.addRow("Teléfono 2", self.input_telefono_2)
+        form.addRow("Nota 2", self.input_nota_2)
+        form.addRow("Teléfono 3", self.input_telefono_3)
+        form.addRow("Nota 3", self.input_nota_3)
+        form.addRow("Teléfono 4", self.input_telefono_4)
+        form.addRow("Nota 4", self.input_nota_4)
+        form.addRow("Auxiliar", self.input_auxiliar)
+        form.addRow("Observaciones", self.input_observaciones)
+
+
 
         layout.addLayout(form)
 
@@ -86,8 +111,22 @@ class ContactoDialog(QDialog):
         nombre = self.input_nombre.text()
         apellido_1 = self.input_apellido_1.text()
         apellido_2 = self.input_apellido_2.text()
-        telefono = self.input_telefono.text()
-        email = self.input_email.text()
+        # telefono = self.input_telefono.text()
+        # email = self.input_email.text()
+
+        info_contacto = InfoContactos(
+            email=self.input_email.text(),
+            telefono_1=self.input_telefono_1.text(),
+            nota_1=self.input_nota_1.text(),
+            telefono_2=self.input_telefono_2.text(),
+            nota_2=self.input_nota_2.text(),
+            telefono_3=self.input_telefono_3.text(),
+            nota_3=self.input_nota_3.text(),
+            telefono_4=self.input_telefono_4.text(),
+            nota_4=self.input_nota_4.text(),
+            auxiliar=self.input_auxiliar.text(),
+            observaciones=self.input_observaciones.text()
+        )
 
         direccion = Direccion(
             calle=self.input_calle.text(),
@@ -105,9 +144,9 @@ class ContactoDialog(QDialog):
                 nombre=nombre,
                 apellido_1=apellido_1,
                 apellido_2=apellido_2,
-                telefono=telefono,
-                email=email,
-                direccion=direccion
+
+                direccion=direccion,
+                info_contactos=info_contacto
             )
 
             if self.contacto:
@@ -137,8 +176,24 @@ class ContactoDialog(QDialog):
         self.input_nombre.setText(self.contacto.get("nombre", ""))
         self.input_apellido_1.setText(self.contacto.get("apellido_1", ""))
         self.input_apellido_2.setText(self.contacto.get("apellido_2", ""))
-        self.input_telefono.setText(self.contacto.get("telefono", ""))
-        self.input_email.setText(self.contacto.get("email", ""))
+        info_contactos = self.contacto.get("info_contactos", {})
+
+        self.input_email.setText(info_contactos.get("email", ""))
+        self.input_telefono_1.setText(info_contactos.get("telefono_1", ""))
+        self.input_nota_1.setText(info_contactos.get("nota_1", ""))
+        self.input_telefono_2.setText(info_contactos.get("telefono_2", ""))
+        self.input_nota_2.setText(info_contactos.get("nota_2", ""))
+        self.input_telefono_3.setText(info_contactos.get("telefono_3", ""))
+        self.input_nota_3.setText(info_contactos.get("nota_3", ""))
+        self.input_telefono_4.setText(info_contactos.get("telefono_4", ""))
+        self.input_nota_4.setText(info_contactos.get("nota_4", ""))
+        self.input_observaciones.setText(info_contactos.get("observaciones", ""))
+        self.input_auxiliar.setText(info_contactos.get("auxiliar", ""))
+        self.input_telefono_4.setText(info_contactos.get("telefono_4", ""))
+        self.input_nota_4.setText(info_contactos.get("nota_4", ""))
+        self.input_auxiliar.setText(info_contactos.get("auxiliar", ""))
+        self.input_observaciones.setText(info_contactos.get("observaciones", ""))
+
 
         direccion = self.contacto.get("direccion", {})
 

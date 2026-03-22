@@ -92,9 +92,15 @@ class AgendaTelefonica:
         contacto.apellido_1 = validar_apellido(contacto.apellido_1)
         contacto.apellido_2 = validar_apellido(contacto.apellido_2)
         # 🔹 Validación del telefono
-        contacto.telefono = validar_telefono(contacto.telefono)
+        # contacto.telefono = validar_telefono(contacto.telefono)
         # 🔹 Validación del email
-        contacto.email = validar_email(contacto.email)
+        if contacto.info_contactos:
+            contacto.info_contactos.email = validar_email(contacto.info_contactos.email)
+            contacto.info_contactos.telefono_1 = validar_telefono(contacto.info_contactos.telefono_1) if contacto.info_contactos.telefono_1 else None
+            contacto.info_contactos.telefono_2 = validar_telefono(contacto.info_contactos.telefono_2) if contacto.info_contactos.telefono_2 else None
+            contacto.info_contactos.telefono_3 = validar_telefono(contacto.info_contactos.telefono_3) if contacto.info_contactos.telefono_3 else None
+            contacto.info_contactos.telefono_4 = validar_telefono(contacto.info_contactos.telefono_4) if contacto.info_contactos.telefono_4 else None
+            contacto.info_contactos.email = validar_email(contacto.info_contactos.email) if contacto.info_contactos.email else None
         
 
         
@@ -145,8 +151,8 @@ class AgendaTelefonica:
             print(f"Nombre: {datos.get('nombre', '')}")
             print(f"Apellido 1: {datos.get('apellido_1', '')}")
             print(f"Apellido 2: {datos.get('apellido_2', '')}")
-            print(f"Teléfono: {datos.get('telefono', '')}")
-            print(f"Email: {datos.get('email', '')}")
+            # print(f"Teléfono: {datos.get('telefono', '')}")
+            # print(f"Email: {datos.get('email', '')}")
             print("Dirección:")
             dir_ = datos.get('direccion', {})
             print(f"  Calle: {dir_.get('calle', '')}")
@@ -157,6 +163,19 @@ class AgendaTelefonica:
             print(f"  CP: {dir_.get('cp', '')}")
             print(f"  Provincia: {dir_.get('provincia', '')}")
             print("-" * 30)
+            print('Datos de contacto:')
+            info_ = datos.get('info_contactos', {})
+            print(f"  Email: {info_.get('email', '')}")
+            print(f"  Teléfono 1: {info_.get('telefono_1', '')}")
+            print(f"  Nota 1: {info_.get('nota_1', '')}")
+            print(f"  Teléfono 2: {info_.get('telefono_2', '')}")
+            print(f"  Nota 2: {info_.get('nota_2', '')}")
+            print(f"  Teléfono 3: {info_.get('telefono_3', '')}")
+            print(f"  Nota 3: {info_.get('nota_3', '')}")
+            print(f"  Teléfono 4: {info_.get('telefono_4', '')}")
+            print(f"  Nota 4: {info_.get('nota_4', '')}")
+            print(f"  Observaciones: {info_.get('observaciones', '')}")
+            print(f"  Auxiliar: {info_.get('auxiliar', '')}")
 
 
     def editar_contacto(self, id_contacto, contacto: Contacto):
@@ -170,8 +189,14 @@ class AgendaTelefonica:
         contacto.nombre = validar_nombre(contacto.nombre)
         contacto.apellido_1 = validar_apellido(contacto.apellido_1)
         contacto.apellido_2 = validar_apellido(contacto.apellido_2)
-        contacto.telefono = validar_telefono(contacto.telefono)
-        contacto.email = validar_email(contacto.email)
+        # contacto.telefono = validar_telefono(contacto.telefono)
+        # contacto.email = validar_email(contacto.email)
+        if contacto.info_contactos:
+            contacto.info_contactos.telefono_1 = validar_telefono(contacto.info_contactos.telefono_1) if contacto.info_contactos.telefono_1 else None
+            contacto.info_contactos.telefono_2 = validar_telefono(contacto.info_contactos.telefono_2) if contacto.info_contactos.telefono_2 else None
+            contacto.info_contactos.telefono_3 = validar_telefono(contacto.info_contactos.telefono_3) if contacto.info_contactos.telefono_3 else None
+            contacto.info_contactos.telefono_4 = validar_telefono(contacto.info_contactos.telefono_4) if contacto.info_contactos.telefono_4 else None
+            contacto.info_contactos.email = validar_email(contacto.info_contactos.email) if contacto.info_contactos.email else None
 
         # Reemplazar el contacto completo
         self.contactos[id_contacto] = contacto.to_dict()

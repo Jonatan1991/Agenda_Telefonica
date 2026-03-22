@@ -3,6 +3,8 @@
 # ============================================================
 
 from controllers.agenda_controller import AgendaController
+from models.contacto_models import Contacto
+from models.direccion_models import Direccion
 
 def menu():
     """Muestra el menú principal."""
@@ -27,20 +29,27 @@ def iniciar_consola():
         # Añadir contacto
         if opcion == "1":
             nombre = input("Nombre: ")
-            telefono = input("Teléfono: ")
-            email = input("Email: ")
 
             direccion = {
                 "calle": input("Calle: "),
                 "numero": input("Número: "),
                 "cp": input("CP: "),
-                "municipio": input("Municipio: ")
+                "provincia": input("Provincia: ")
             }
 
+            direccion_obj = Direccion.from_dict(direccion) if any(direccion.values()) else None
+
+            contacto_obj = Contacto(
+                nombre=nombre,
+                apellido_1="",
+                apellido_2="",
+                telefono=telefono,
+                email=email,
+                direccion=direccion_obj
+            )
+
             try:
-                nuevo_id = agenda.agregar_contacto(
-                nombre, telefono, email, direccion
-                )
+                nuevo_id = agenda.agregar_contacto(contacto_obj)
                 print(f"✅ Contacto añadido con ID {nuevo_id}")
             except ValueError as error:
                 print("❌ Error:", error)
@@ -62,31 +71,30 @@ def iniciar_consola():
             if id_contacto not in agenda.agenda.contactos:
                 print("❌ ID no encontrado")
             else:
+                datos_existentes = agenda.agenda.contactos[id_contacto]
+                contacto_existente = Contacto.from_dict(datos_existentes)
+
                 print("(deje vacío para no modificar)")
-                nombre = input("Nuevo nombre: ").strip() or None
-                telefono = input("Nuevo teléfono: ").strip() or None
-                email = input("Nuevo email: ").strip() or None
+                nombre = input(f"Nuevo nombre ({contacto_existente.nombre}): ").strip() or contacto_existente.nombre
 
                 print("-- Dirección --")
-                calle = input("Calle: ").strip() or None
-                numero = input("Número: ").strip() or None
-                municipio = input("Municipio: ").strip() or None
-                cp = input("CP: ").strip() or None
+                dir_dict = contacto_existente.direccion.to_dict() if contacto_existente.direccion else {}
+                calle = input(f"Calle ({dir_dict.get('calle', '')}): ").strip() or dir_dict.get('calle', '')
+                numero = input(f"Número ({dir_dict.get('numero', '')}): ").strip() or dir_dict.get('numero', '')
+                provincia = input(f"Provincia ({dir_dict.get('provincia', '')}): ").strip() or dir_dict.get('provincia', '')
+                cp = input(f"CP ({dir_dict.get('cp', '')}): ").strip() or dir_dict.get('cp', '')
 
-                direccion = {}
-                if calle is not None: direccion["calle"] = calle
-                if numero is not None: direccion["numero"] = numero
-                if municipio is not None: direccion["municipio"] = municipio
-                if cp is not None: direccion["cp"] = cp
+                nueva_direccion = Direccion(calle=calle, numero=numero, provincia=provincia, cp=cp)
+
+                contacto_actualizado = Contacto(
+                    nombre=nombre,
+                    apellido_1=contacto_existente.apellido_1,
+                    apellido_2=contacto_existente.apellido_2,
+                    direccion=nueva_direccion
+                )
 
                 try:
-                    success = agenda.editar_contacto(
-                        id_contacto,
-                        nombre=nombre,
-                        telefono=telefono,
-                        email=email,
-                        direccion=direccion if direccion else None,
-                    )
+                    success = agenda.editar_contacto(id_contacto, contacto_actualizado)
 
                     if success:
                         print("✏️ Contacto editado")

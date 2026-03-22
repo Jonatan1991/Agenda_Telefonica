@@ -62,9 +62,11 @@ class TablaContactos(QTableWidget):
 
             apellidos = f"{datos.get("apellido_1", "")} {datos.get("apellido_2", "")}"
 
+            info_contactos = datos.get("info_contactos", {})
+
             self.setItem(fila, 0, QTableWidgetItem(id_contacto))
             self.setItem(fila, 1, QTableWidgetItem(datos.get("nombre", "")))
             self.setItem(fila, 2, QTableWidgetItem(apellidos))
-            self.setItem(fila, 3, QTableWidgetItem(datos.get("telefono", "")))
-            self.setItem(fila, 4, QTableWidgetItem(datos.get("email", "")))
+            self.setItem(fila, 3, QTableWidgetItem(info_contactos.get("telefono_1", "")))
+            self.setItem(fila, 4, QTableWidgetItem(info_contactos.get("email", "")))
             self.setItem(fila, 5, QTableWidgetItem(direccion_formato))

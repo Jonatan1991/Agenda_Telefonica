@@ -1,15 +1,18 @@
 from models.direccion_models import Direccion
+from models.contacto_info_models import InfoContactos
 
 class Contacto:
-    def __init__(self, nombre, apellido_1, apellido_2, telefono, email, direccion):
+    def __init__(self, nombre, apellido_1, apellido_2, direccion, info_contactos=None):
         self.nombre =nombre
         self.apellido_1 =apellido_1
         self.apellido_2 =apellido_2
-        self.telefono = telefono
-        self.email = email
         if isinstance(direccion, dict):
             direccion = Direccion.from_dict(direccion)
         self.direccion = direccion
+        if isinstance(info_contactos, dict):
+            info_contactos = InfoContactos.from_dict(info_contactos)
+        self.info_contactos = info_contactos
+
 
     def to_dict(self):
         """Convierte el objeto en diccionario para guardarlo en JSON."""
@@ -17,9 +20,9 @@ class Contacto:
             "nombre": self.nombre,
             "apellido_1": self.apellido_1,
             "apellido_2": self.apellido_2,
-            "telefono": self.telefono,
-            "email": self.email,
-            "direccion": self.direccion.to_dict() if self.direccion else None
+
+            "direccion": self.direccion.to_dict() if self.direccion else None,
+            "info_contactos": self.info_contactos.to_dict() if self.info_contactos else None
         }
 
     @classmethod
@@ -29,7 +32,7 @@ class Contacto:
             datos.get("nombre"),
             datos.get("apellido_1"),
             datos.get("apellido_2"),
-            datos.get("telefono"),
-            datos.get("email"),
-            Direccion.from_dict(datos.get("direccion", {})) if datos.get("direccion") else None
+
+            Direccion.from_dict(datos.get("direccion", {})) if datos.get("direccion") else None,
+            InfoContactos.from_dict(datos.get("info_contactos", {})) if datos.get("info_contactos") else None
         )

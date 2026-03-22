@@ -3,16 +3,27 @@
         "nombre": "Julian",
         "apellido_1": "Martinez",
         "apellido_2": "Perez",
-        "telefono": "+34444403023",
-        "email": "jul@fdskld.com",
         "direccion": {
             "calle": "Don Quijote",
             "numero": "20",
             "piso": "PB",
             "puerta": "B",
-            "escalera": "",
+            "escalera": "1",
             "cp": "43334",
             "provincia": "Madrid"
+        },
+        "info_contactos": {
+            "email": "asd@asd.com",
+            "telefono_1": "234567890",
+            "telefono_2": "123456789",
+            "telefono_3": "123456789",
+            "telefono_4": "123456789",
+            "nota_1": "12345678",
+            "nota_2": "123456789",
+            "nota_3": "qw",
+            "nota_4": "qw",
+            "observaciones": "xfgsdfsdf",
+            "auxiliar": "123456789"
         }
     },
     "8": {
@@ -125,6 +136,33 @@
             "escalera": "",
             "cp": "",
             "provincia": ""
+        }
+    },
+    "17": {
+        "nombre": "Dfsdf",
+        "apellido_1": "Sdf",
+        "apellido_2": "Sdf",
+        "direccion": {
+            "calle": "123456789",
+            "numero": "123456789",
+            "piso": "123456789",
+            "puerta": "123456789",
+            "escalera": "123456789",
+            "cp": "123456789",
+            "provincia": "123456789"
+        },
+        "info_contactos": {
+            "email": "sdf@sdf.com",
+            "telefono_1": "123456789",
+            "telefono_2": "123456789",
+            "telefono_3": "123456789",
+            "telefono_4": "123456789",
+            "nota_1": "123456789",
+            "nota_2": "123456789",
+            "nota_3": "123456789",
+            "nota_4": "123456789",
+            "observaciones": "123456789",
+            "auxiliar": "123456789"
         }
     }
 }
