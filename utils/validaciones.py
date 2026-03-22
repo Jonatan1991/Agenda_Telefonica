@@ -47,3 +47,14 @@ def validar_email(email):
         raise ValueError("Escriba un email válido, ej: correo@dominio.com")
 
     return email
+
+
+def validar_apellido(apellido):
+    """Valida que el apellido tenga al menos 2 caracteres."""
+    
+    if not apellido or len(apellido.strip()) < 2:
+        raise ValueError("El apellido debe tener al menos 2 caracteres")
+    
+    apellido = capitalizar_texto(apellido)
+    
+    return apellido.strip()

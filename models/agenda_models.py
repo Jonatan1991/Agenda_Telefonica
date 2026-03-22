@@ -1,7 +1,7 @@
 import json
 import os
 
-from utils.validaciones import validar_email, validar_nombre, validar_telefono
+from utils.validaciones import validar_email, validar_nombre, validar_telefono, validar_apellido
 from models.contacto_models import Contacto
 
 # ============================================================
@@ -89,6 +89,8 @@ class AgendaTelefonica:
         # 🔹 Validación del nombre
         # Validaciones externas
         contacto.nombre = validar_nombre(contacto.nombre)
+        contacto.apellido_1 = validar_apellido(contacto.apellido_1)
+        contacto.apellido_2 = validar_apellido(contacto.apellido_2)
         # 🔹 Validación del telefono
         contacto.telefono = validar_telefono(contacto.telefono)
         # 🔹 Validación del email
@@ -138,15 +140,20 @@ class AgendaTelefonica:
 
         for id, datos in contactos.items():
             print(f"ID: {id}")
-            print(f"Nombre: {datos['nombre']}")
-            print(f"Teléfono: {datos['telefono']}")
-            print(f"Email: {datos['email']}")
+            print(f"Nombre: {datos.get('nombre', '')}")
+            print(f"Apellido 1: {datos.get('apellido_1', '')}")
+            print(f"Apellido 2: {datos.get('apellido_2', '')}")
+            print(f"Teléfono: {datos.get('telefono', '')}")
+            print(f"Email: {datos.get('email', '')}")
             print("Dirección:")
             dir_ = datos.get('direccion', {})
             print(f"  Calle: {dir_.get('calle', '')}")
             print(f"  Número: {dir_.get('numero', '')}")
-            print(f"  Municipio: {dir_.get('municipio', '')}")
+            print(f"  Piso: {dir_.get('piso', '')}")
+            print(f"  Puerta: {dir_.get('puerta', '')}")
+            print(f"  Escalera: {dir_.get('escalera', '')}")
             print(f"  CP: {dir_.get('cp', '')}")
+            print(f"  Provincia: {dir_.get('provincia', '')}")
             print("-" * 30)
 
 
@@ -159,6 +166,8 @@ class AgendaTelefonica:
 
         # Validar los campos del contacto
         contacto.nombre = validar_nombre(contacto.nombre)
+        contacto.apellido_1 = validar_apellido(contacto.apellido_1)
+        contacto.apellido_2 = validar_apellido(contacto.apellido_2)
         contacto.telefono = validar_telefono(contacto.telefono)
         contacto.email = validar_email(contacto.email)
 

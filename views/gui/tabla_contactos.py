@@ -6,9 +6,9 @@ class TablaContactos(QTableWidget):
     def __init__(self):
         super().__init__()
 
-        self.setColumnCount(8)
+        self.setColumnCount(12)
         self.setHorizontalHeaderLabels(
-            ["ID", "Nombre", "Teléfono", "Email", "Calle", "Número", "Municipio", "CP"]
+            ["ID", "Nombre", "Apellido 1", "Apellido 2", "Teléfono", "Email", "Calle", "Número", "Piso", "Puerta", "CP", "Provincia"]
         )
 
         header = self.horizontalHeader()
@@ -24,12 +24,16 @@ class TablaContactos(QTableWidget):
         for fila, (id_contacto, datos) in enumerate(contactos.items()):
 
             self.setItem(fila, 0, QTableWidgetItem(id_contacto))
-            self.setItem(fila, 1, QTableWidgetItem(datos["nombre"]))
-            self.setItem(fila, 2, QTableWidgetItem(datos["telefono"]))
-            self.setItem(fila, 3, QTableWidgetItem(datos["email"]))
+            self.setItem(fila, 1, QTableWidgetItem(datos.get("nombre", "")))
+            self.setItem(fila, 2, QTableWidgetItem(datos.get("apellido_1", "")))
+            self.setItem(fila, 3, QTableWidgetItem(datos.get("apellido_2", "")))
+            self.setItem(fila, 4, QTableWidgetItem(datos.get("telefono", "")))
+            self.setItem(fila, 5, QTableWidgetItem(datos.get("email", "")))
 
             direccion = datos.get("direccion", {})
-            self.setItem(fila, 4, QTableWidgetItem(direccion.get("calle", "")))
-            self.setItem(fila, 5, QTableWidgetItem(direccion.get("numero", "")))
-            self.setItem(fila, 6, QTableWidgetItem(direccion.get("municipio", "")))
-            self.setItem(fila, 7, QTableWidgetItem(direccion.get("cp", "")))
+            self.setItem(fila, 6, QTableWidgetItem(direccion.get("calle", "")))
+            self.setItem(fila, 7, QTableWidgetItem(direccion.get("numero", "")))
+            self.setItem(fila, 8, QTableWidgetItem(direccion.get("piso", "")))
+            self.setItem(fila, 9, QTableWidgetItem(direccion.get("puerta", "")))
+            self.setItem(fila, 10, QTableWidgetItem(direccion.get("cp", "")))
+            self.setItem(fila, 11, QTableWidgetItem(direccion.get("provincia", "")))

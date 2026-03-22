@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
 )
 
 from models.contacto_models import Contacto
+from models.direccion_models import Direccion
 
 
 class ContactoDialog(QDialog):
@@ -34,22 +35,32 @@ class ContactoDialog(QDialog):
 
         # CAMPOS
         self.input_nombre = QLineEdit()
+        self.input_apellido_1 = QLineEdit()
+        self.input_apellido_2 = QLineEdit()
         self.input_telefono = QLineEdit()
         self.input_email = QLineEdit()
 
         self.input_calle = QLineEdit()
         self.input_numero = QLineEdit()
-        self.input_municipio = QLineEdit()
+        self.input_piso = QLineEdit()
+        self.input_puerta = QLineEdit()
+        self.input_escalera = QLineEdit()
         self.input_cp = QLineEdit()
+        self.input_provincia = QLineEdit()
 
         form.addRow("Nombre", self.input_nombre)
+        form.addRow("Apellido 1", self.input_apellido_1)
+        form.addRow("Apellido 2", self.input_apellido_2)
         form.addRow("Teléfono", self.input_telefono)
         form.addRow("Email", self.input_email)
 
         form.addRow("Calle", self.input_calle)
         form.addRow("Número", self.input_numero)
-        form.addRow("Municipio", self.input_municipio)
+        form.addRow("Piso", self.input_piso)
+        form.addRow("Puerta", self.input_puerta)
+        form.addRow("Escalera", self.input_escalera)
         form.addRow("CP", self.input_cp)
+        form.addRow("Provincia", self.input_provincia)
 
         layout.addLayout(form)
 
@@ -73,20 +84,27 @@ class ContactoDialog(QDialog):
     def guardar(self):
 
         nombre = self.input_nombre.text()
+        apellido_1 = self.input_apellido_1.text()
+        apellido_2 = self.input_apellido_2.text()
         telefono = self.input_telefono.text()
         email = self.input_email.text()
 
-        direccion = {
-            "calle": self.input_calle.text(),
-            "numero": self.input_numero.text(),
-            "municipio": self.input_municipio.text(),
-            "cp": self.input_cp.text()
-        }
+        direccion = Direccion(
+            calle=self.input_calle.text(),
+            numero=self.input_numero.text(),
+            piso=self.input_piso.text(),
+            puerta=self.input_puerta.text(),
+            escalera=self.input_escalera.text(),
+            cp=self.input_cp.text(),
+            provincia=self.input_provincia.text()
+        )
 
         try:
 
             contacto_obj = Contacto(
                 nombre=nombre,
+                apellido_1=apellido_1,
+                apellido_2=apellido_2,
                 telefono=telefono,
                 email=email,
                 direccion=direccion
@@ -116,13 +134,18 @@ class ContactoDialog(QDialog):
             
     def _cargar_datos(self):
 
-        self.input_nombre.setText(self.contacto["nombre"])
-        self.input_telefono.setText(self.contacto["telefono"])
-        self.input_email.setText(self.contacto["email"])
+        self.input_nombre.setText(self.contacto.get("nombre", ""))
+        self.input_apellido_1.setText(self.contacto.get("apellido_1", ""))
+        self.input_apellido_2.setText(self.contacto.get("apellido_2", ""))
+        self.input_telefono.setText(self.contacto.get("telefono", ""))
+        self.input_email.setText(self.contacto.get("email", ""))
 
         direccion = self.contacto.get("direccion", {})
 
         self.input_calle.setText(direccion.get("calle", ""))
         self.input_numero.setText(direccion.get("numero", ""))
-        self.input_municipio.setText(direccion.get("municipio", ""))
+        self.input_piso.setText(direccion.get("piso", ""))
+        self.input_puerta.setText(direccion.get("puerta", ""))
+        self.input_escalera.setText(direccion.get("escalera", ""))
         self.input_cp.setText(direccion.get("cp", ""))
+        self.input_provincia.setText(direccion.get("provincia", ""))
