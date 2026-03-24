@@ -33,7 +33,10 @@ class MainWindow(QMainWindow):
         layout_principal = QVBoxLayout()
 
         # TABLA
-        self.tabla = TablaContactos()
+        self.tabla = TablaContactos(
+            on_editar_callback=self.editar_contacto_por_id,
+            on_eliminar_callback=self.eliminar_contacto_por_id
+        )
         layout_principal.addWidget(self.tabla)
 
         # BOTONES
@@ -131,4 +134,25 @@ class MainWindow(QMainWindow):
 
             self.controller.eliminar_contacto(id_contacto)
 
+            self.cargar_contactos()
+
+    def editar_contacto_por_id(self, id_contacto):
+        contactos = self.controller.obtener_contactos()
+        contacto = contactos.get(id_contacto)
+        if not contacto:
+         return
+        contacto = contacto.copy()
+        contacto["id"] = id_contacto
+        dialogo = ContactoDialog(self.controller, contacto)
+        if dialogo.exec():
+            self.cargar_contactos()
+
+    def eliminar_contacto_por_id(self, id_contacto):
+        confirmacion = QMessageBox.question(
+            self,
+            "Eliminar contacto",
+            "¿Seguro que quieres eliminar este contacto?"
+        )
+        if confirmacion == QMessageBox.Yes:
+            self.controller.eliminar_contacto(id_contacto)
             self.cargar_contactos()
