@@ -121,6 +121,18 @@ class AgendaTelefonica:
         self.guardar()
         return id_contacto
 
+    def agregar_contacto_sin_validaciones(self, contacto: Contacto):
+        """Añade un nuevo contacto sin aplicar validaciones (usado para importación)."""
+        self.ultimo_id += 1
+        id_contacto = str(self.ultimo_id)
+
+        # Guardar el contacto sin validaciones
+        self.contactos[id_contacto] = contacto.to_dict()
+
+        # Guardamos cambios
+        self.guardar()
+        return id_contacto
+
     def buscar_por_nombre(self, nombre):
         """Devuelve un diccionario con los contactos cuyo nombre contiene el texto dado."""
         nombre = nombre.lower()

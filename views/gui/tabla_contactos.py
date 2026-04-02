@@ -1,13 +1,22 @@
-from PySide6.QtWidgets import QHeaderView, QTableWidget, QTableWidgetItem, QPushButton, QWidget, QHBoxLayout
+from PySide6.QtWidgets import (
+    QHeaderView,
+    QTableWidget,
+    QTableWidgetItem,
+    QPushButton,
+    QWidget,
+    QHBoxLayout,
+    QStyle
+)
 
 
 class TablaContactos(QTableWidget):
 
-    def __init__(self, on_editar_callback=None, on_eliminar_callback=None):
+    def __init__(self, on_editar_callback=None, on_eliminar_callback=None, on_ver_callback=None):
         super().__init__()
 
         self.on_editar_callback = on_editar_callback
         self.on_eliminar_callback = on_eliminar_callback
+        self.on_ver_callback = on_ver_callback
 
         self.setColumnCount(7)
         self.setHorizontalHeaderLabels(
@@ -77,14 +86,27 @@ class TablaContactos(QTableWidget):
             widget_acciones = QWidget()
             layout_acciones = QHBoxLayout(widget_acciones)
             layout_acciones.setContentsMargins(0, 0, 0, 0)
-            layout_acciones.setSpacing(5)
+            layout_acciones.setSpacing(3)
 
-            btn_editar = QPushButton("Editar")
-            btn_eliminar = QPushButton("Eliminar")
+            btn_ver = QPushButton("")
+            btn_editar = QPushButton("")
+            btn_eliminar = QPushButton("")
 
+            btn_ver.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogContentsView))
+            btn_editar.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogDetailedView))
+            btn_eliminar.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_TrashIcon))
+
+            btn_ver.setToolTip("Ver detalles")
+            btn_editar.setToolTip("Editar contacto")
+            btn_eliminar.setToolTip("Eliminar contacto")
+
+            btn_ver.clicked.connect(
+                lambda checked, id=id_contacto: self.on_ver_callback(id) if self.on_ver_callback else None
+            )
             btn_editar.clicked.connect(lambda checked, id=id_contacto: self.on_editar_callback(id) if self.on_editar_callback else None)
             btn_eliminar.clicked.connect(lambda checked, id=id_contacto: self.on_eliminar_callback(id) if self.on_eliminar_callback else None)
 
+            layout_acciones.addWidget(btn_ver)
             layout_acciones.addWidget(btn_editar)
             layout_acciones.addWidget(btn_eliminar)
 

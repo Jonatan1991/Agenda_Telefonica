@@ -22,6 +22,7 @@ class ContactoDialog(QDialog):
         self.contacto = contacto
 
         self.setWindowTitle("Nuevo contacto")
+        self.setMinimumSize(400, 600)
 
         self._crear_interfaz()
 
