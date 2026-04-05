@@ -1,3 +1,4 @@
+﻿from PySide6.QtCore import QPoint
 from PySide6.QtWidgets import (
     QHeaderView,
     QTableWidget,
@@ -20,7 +21,7 @@ class TablaContactos(QTableWidget):
 
         self.setColumnCount(7)
         self.setHorizontalHeaderLabels(
-            ["No.", "Nombre", "Apellidos", "Teléfono", "Email", "Dirección", "Acciones"]
+            ["ID", "Nombre", "Apellidos", "TelÃ©fono", "Email", "DirecciÃ³n", "Acciones"]
         )
 
         header = self.horizontalHeader()
@@ -28,15 +29,26 @@ class TablaContactos(QTableWidget):
         header.setStretchLastSection(True)
 
         self.setSortingEnabled(True)
+        self.setColumnHidden(0, True)
+
+    def _id_desde_boton(self, boton):
+        pos = boton.parent().mapTo(self.viewport(), QPoint(0, 0))
+        row = self.indexAt(pos).row()
+        if row < 0:
+            return None
+        id_item = self.item(row, 0)
+        if id_item:
+            return id_item.text()
+        return None
 
     def _formatear_direccion(self, direccion):
-        """Formatea dirección de forma limpia, omitiendo campos vacíos."""
+        """Formatea direcciÃ³n de forma limpia, omitiendo campos vacÃ­os."""
         if not direccion:
             return "N/A"
         
         partes = []
         
-        # Calle y número juntos
+        # Calle y nÃºmero juntos
         if direccion.get("calle"):
             calle_num = f"{direccion['calle']} {direccion.get('numero', '')}".strip()
             partes.append(calle_num )
@@ -65,6 +77,10 @@ class TablaContactos(QTableWidget):
 
     def cargar_datos(self, contactos):
 
+        sorting_activo = self.isSortingEnabled()
+        if sorting_activo:
+            self.setSortingEnabled(False)
+
         self.setRowCount(len(contactos))
 
         for fila, (id_contacto, datos) in enumerate(contactos.items()):
@@ -76,7 +92,8 @@ class TablaContactos(QTableWidget):
 
             info_contactos = datos.get("info_contactos", {})
 
-            self.setItem(fila, 0, QTableWidgetItem(id_contacto))
+           
+            self.setItem(fila, 0, QTableWidgetItem(str(id_contacto)))
             self.setItem(fila, 1, QTableWidgetItem(datos.get("nombre", "")))
             self.setItem(fila, 2, QTableWidgetItem(apellidos))
             self.setItem(fila, 3, QTableWidgetItem(info_contactos.get("telefono_1", "")))
@@ -86,7 +103,7 @@ class TablaContactos(QTableWidget):
             widget_acciones = QWidget()
             layout_acciones = QHBoxLayout(widget_acciones)
             layout_acciones.setContentsMargins(0, 0, 0, 0)
-            layout_acciones.setSpacing(3)
+            layout_acciones.setSpacing(2)
 
             btn_ver = QPushButton("")
             btn_editar = QPushButton("")
@@ -101,13 +118,24 @@ class TablaContactos(QTableWidget):
             btn_eliminar.setToolTip("Eliminar contacto")
 
             btn_ver.clicked.connect(
-                lambda checked, id=id_contacto: self.on_ver_callback(id) if self.on_ver_callback else None
+                lambda checked, b=btn_ver: self.on_ver_callback(self._id_desde_boton(b)) if self.on_ver_callback else None
             )
-            btn_editar.clicked.connect(lambda checked, id=id_contacto: self.on_editar_callback(id) if self.on_editar_callback else None)
-            btn_eliminar.clicked.connect(lambda checked, id=id_contacto: self.on_eliminar_callback(id) if self.on_eliminar_callback else None)
+            btn_editar.clicked.connect(
+                lambda checked, b=btn_editar: self.on_editar_callback(self._id_desde_boton(b)) if self.on_editar_callback else None
+            )
+            btn_eliminar.clicked.connect(
+                lambda checked, b=btn_eliminar: self.on_eliminar_callback(self._id_desde_boton(b)) if self.on_eliminar_callback else None
+            )
 
             layout_acciones.addWidget(btn_ver)
             layout_acciones.addWidget(btn_editar)
             layout_acciones.addWidget(btn_eliminar)
 
             self.setCellWidget(fila, 6, widget_acciones)
+
+        if sorting_activo:
+            self.setSortingEnabled(True)
+
+
+
+

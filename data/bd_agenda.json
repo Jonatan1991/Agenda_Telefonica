@@ -108,9 +108,9 @@
         }
     },
     "15": {
-        "nombre": "Gonzalez)",
-        "apellido_1": "(Ines",
-        "apellido_2": "S",
+        "nombre": "Doctor Gonzalez",
+        "apellido_1": "Ines",
+        "apellido_2": "Se",
         "direccion": {
             "calle": "",
             "numero": "",
@@ -121,15 +121,15 @@
             "provincia": ""
         },
         "info_contactos": {
-            "email": null,
+            "email": "email@fds.com",
             "telefono_1": "915914480",
             "telefono_2": null,
             "telefono_3": null,
             "telefono_4": null,
-            "nota_1": null,
-            "nota_2": null,
-            "nota_3": null,
-            "nota_4": null,
+            "nota_1": "",
+            "nota_2": "",
+            "nota_3": "",
+            "nota_4": "",
             "observaciones": "",
             "auxiliar": ""
         }

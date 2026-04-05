@@ -5,7 +5,6 @@ import sys
 def main():
 
     app = QApplication(sys.argv)
-
     ventana = MainWindow()
     ventana.show()
 
