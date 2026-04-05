@@ -24380,33 +24380,6 @@
             "auxiliar": ""
         }
     },
-    "919": {
-        "nombre": "Montes",
-        "apellido_1": "Os",
-        "apellido_2": "RESTAURANTE TRAS",
-        "direccion": {
-            "calle": "",
-            "numero": "",
-            "piso": "",
-            "puerta": "",
-            "escalera": "",
-            "cp": "",
-            "provincia": ""
-        },
-        "info_contactos": {
-            "email": null,
-            "telefono_1": "913765727",
-            "telefono_2": null,
-            "telefono_3": null,
-            "telefono_4": null,
-            "nota_1": "Pepe",
-            "nota_2": null,
-            "nota_3": null,
-            "nota_4": null,
-            "observaciones": "",
-            "auxiliar": ""
-        }
-    },
     "920": {
         "nombre": "Zalacain",
         "apellido_1": "Restaurante",

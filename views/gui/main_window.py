@@ -12,7 +12,8 @@ from controllers.agenda_controller import AgendaController
 from views.gui.tabla_contactos import TablaContactos
 from views.gui.contacto_dialog import ContactoDialog
 from views.gui.contacto_ver_dialog import ContactoVerDialog
-from views.gui.paginador import Paginador
+from views.gui.components.paginador import Paginador
+from views.gui.components.buscador import Buscador
 
 
 class MainWindow(QMainWindow):
@@ -22,7 +23,7 @@ class MainWindow(QMainWindow):
 
         self.controller = AgendaController()
 
-        self.setWindowTitle("Agenda TelefÃ³nica")
+        self.setWindowTitle("Agenda Telefónica")
         self.setMinimumSize(1200, 600)
 
         self._crear_interfaz()
@@ -41,6 +42,10 @@ class MainWindow(QMainWindow):
             on_eliminar_callback=self.eliminar_contacto_por_id,
             on_ver_callback=self.ver_contacto_por_id
         )
+        # BUSCADOR
+        self.buscador = Buscador(on_change_callback=self._aplicar_filtro)
+        layout_principal.addWidget(self.buscador)
+
         layout_principal.addWidget(self.tabla)
 
         # PAGINADOR
@@ -50,7 +55,7 @@ class MainWindow(QMainWindow):
         # BOTONES
         layout_botones = QHBoxLayout()
 
-        self.btn_agregar = QPushButton("AÃ±adir")
+        self.btn_agregar = QPushButton("Añadir")
         self.btn_importar = QPushButton("Importar Excel")
         self.btn_refrescar = QPushButton("Actualizar")
 
@@ -74,8 +79,7 @@ class MainWindow(QMainWindow):
 
         contactos = self.controller.obtener_contactos()
         self._contactos = contactos
-        self.paginador.set_total_items(len(contactos))
-        self._refrescar_tabla_paginada()
+        self._aplicar_filtro(self.buscador.get_text() if hasattr(self, "buscador") else "")
 
     def abrir_formulario(self):
 
@@ -85,7 +89,7 @@ class MainWindow(QMainWindow):
             self.cargar_contactos()
 
     def _refrescar_tabla_paginada(self, *_):
-        contactos = getattr(self, "_contactos", {})
+        contactos = getattr(self, "_contactos_filtrados", {})
         self.tabla.cargar_datos(self._paginar_contactos(contactos))
 
     def _paginar_contactos(self, contactos):
@@ -95,6 +99,39 @@ class MainWindow(QMainWindow):
         inicio = (pagina - 1) * tamano
         fin = inicio + tamano
         return dict(items[inicio:fin])
+
+    def _aplicar_filtro(self, texto):
+        contactos = getattr(self, "_contactos", {})
+        texto = (texto or "").strip().lower()
+        if not texto:
+            self._contactos_filtrados = contactos
+        else:
+            filtrados = {}
+            for id_contacto, datos in contactos.items():
+                if self._contacto_contiene_texto(datos, texto):
+                    filtrados[id_contacto] = datos
+            self._contactos_filtrados = filtrados
+
+        self.paginador.set_total_items(len(self._contactos_filtrados))
+        # Reset page to 1 when filter changes
+        self.paginador.set_current_page(1)
+        self._refrescar_tabla_paginada()
+
+    def _contacto_contiene_texto(self, contacto, texto):
+        if not contacto:
+            return False
+
+        def _flatten(valor):
+            if valor is None:
+                return ""
+            if isinstance(valor, dict):
+                return " ".join(_flatten(v) for v in valor.values())
+            if isinstance(valor, (list, tuple, set)):
+                return " ".join(_flatten(v) for v in valor)
+            return str(valor)
+
+        contenido = _flatten(contacto).lower()
+        return texto in contenido
 
     def editar_contacto_por_id(self, id_contacto):
         if not id_contacto:
@@ -115,7 +152,7 @@ class MainWindow(QMainWindow):
         confirmacion = QMessageBox.question(
             self,
             "Eliminar contacto",
-            "Â¿Seguro que quieres eliminar este contacto?"
+            "¿Seguro que quieres eliminar este contacto?"
         )
         if confirmacion == QMessageBox.Yes:
             self.controller.eliminar_contacto(id_contacto)
@@ -151,24 +188,24 @@ class MainWindow(QMainWindow):
             resultado = self.controller.importar_contactos_excel(ruta_archivo)
             
             # Mostrar resultados
-            mensaje = f"ImportaciÃ³n completada:\n\n"
+            mensaje = f"Importación completada:\n\n"
             mensaje += f"Contactos importados: {resultado['contactos_importados']}\n"
-            mensaje += f"Errores de importaciÃ³n: {len(resultado['errores_importacion'])}\n"
+            mensaje += f"Errores de importación: {len(resultado['errores_importacion'])}\n"
             mensaje += f"Errores de agregado: {len(resultado['errores_agregado'])}\n\n"
             
             if resultado['errores_importacion']:
-                mensaje += "Errores de importaciÃ³n:\n" + "\n".join(resultado['errores_importacion'][:5]) + "\n..."
+                mensaje += "Errores de importación:\n" + "\n".join(resultado['errores_importacion'][:5]) + "\n..."
             
             if resultado['errores_agregado']:
                 mensaje += "\nErrores de agregado:\n" + "\n".join(resultado['errores_agregado'][:5]) + "\n..."
                 
-            QMessageBox.information(self, "Resultado de ImportaciÃ³n", mensaje)
+            QMessageBox.information(self, "Resultado de Importación", mensaje)
             
             # Recargar la tabla
             self.cargar_contactos()
         
         except Exception as e:
-            QMessageBox.critical(self, "Error", f"Error durante la importaciÃ³n: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Error durante la importación: {str(e)}")
 
 
 

@@ -21,7 +21,7 @@ class TablaContactos(QTableWidget):
 
         self.setColumnCount(7)
         self.setHorizontalHeaderLabels(
-            ["ID", "Nombre", "Apellidos", "TelÃ©fono", "Email", "DirecciÃ³n", "Acciones"]
+            ["ID", "Nombre", "Apellidos", "Teléfono", "Email", "Dirección", "Acciones"]
         )
 
         header = self.horizontalHeader()
@@ -42,13 +42,13 @@ class TablaContactos(QTableWidget):
         return None
 
     def _formatear_direccion(self, direccion):
-        """Formatea direcciÃ³n de forma limpia, omitiendo campos vacÃ­os."""
+        """Formatea dirección de forma limpia, omitiendo campos vacíos."""
         if not direccion:
             return "N/A"
         
         partes = []
         
-        # Calle y nÃºmero juntos
+        # Calle y número juntos
         if direccion.get("calle"):
             calle_num = f"{direccion['calle']} {direccion.get('numero', '')}".strip()
             partes.append(calle_num )

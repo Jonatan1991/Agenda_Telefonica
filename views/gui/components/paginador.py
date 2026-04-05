@@ -119,6 +119,10 @@ class Paginador(QWidget):
         self._total_items = max(0, int(total_items))
         self._actualizar_estado()
 
+    def set_current_page(self, page):
+        self._current_page = max(1, int(page))
+        self._actualizar_estado()
+
     def get_current_page(self):
         return self._current_page
 
