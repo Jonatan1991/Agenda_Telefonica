@@ -1,31 +1,4 @@
 {
-    "11": {
-        "nombre": "A.M.A.",
-        "apellido_1": "",
-        "apellido_2": "",
-        "direccion": {
-            "calle": "91 345 94 10 91 343 47 25",
-            "numero": "91",
-            "piso": "",
-            "puerta": "",
-            "escalera": "",
-            "cp": "",
-            "provincia": ""
-        },
-        "info_contactos": {
-            "email": null,
-            "telefono_1": "913459410",
-            "telefono_2": "913434725",
-            "telefono_3": null,
-            "telefono_4": null,
-            "nota_1": null,
-            "nota_2": null,
-            "nota_3": null,
-            "nota_4": null,
-            "observaciones": "",
-            "auxiliar": ""
-        }
-    },
     "12": {
         "nombre": "",
         "apellido_1": "Javier",

@@ -2,7 +2,8 @@ from PySide6.QtWidgets import (
     QWidget,
     QHBoxLayout,
     QLabel,
-    QLineEdit
+    QLineEdit,
+    QPushButton
 )
 
 
@@ -22,10 +23,14 @@ class Buscador(QWidget):
         self.txt_buscar = QLineEdit()
         self.txt_buscar.setPlaceholderText(placeholder)
 
+        self.btn_limpiar = QPushButton("Limpiar")
+        self.btn_limpiar.clicked.connect(self.limpiar)
+
         self.txt_buscar.textChanged.connect(self._emitir_cambio)
 
         layout.addWidget(self.lbl_buscar)
         layout.addWidget(self.txt_buscar)
+        layout.addWidget(self.btn_limpiar)
 
     def _emitir_cambio(self):
         if self._on_change_callback:
@@ -36,3 +41,6 @@ class Buscador(QWidget):
 
     def get_text(self):
         return self.txt_buscar.text()
+    
+    def limpiar(self):
+        self.txt_buscar.clear()
