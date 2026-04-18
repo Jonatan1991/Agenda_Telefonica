@@ -5,8 +5,13 @@
     QHBoxLayout,
     QPushButton,
     QMessageBox,
-    QFileDialog
+    QFileDialog,
+    QAction,
+    QToolBar,
+    QMenu,
+    QToolButton
 )
+from pathlib import Path
 
 from controllers.agenda_controller import AgendaController
 from views.gui.tabla_contactos import TablaContactos
@@ -24,7 +29,8 @@ class MainWindow(QMainWindow):
         self.controller = AgendaController()
 
         self.setWindowTitle("Agenda Telefónica")
-        self.setMinimumSize(1200, 600)
+        self.setMinimumSize(1200, 800)        
+        self._cargar_estilos()
 
         self._crear_interfaz()
 
@@ -72,8 +78,49 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(contenedor)
 
+        self._crear_toolbar()
+
         # EVENTOS
         self.btn_refrescar.clicked.connect(self.cargar_contactos)
+
+    def _crear_toolbar(self):
+        toolbar = QToolBar("Acciones")
+        toolbar.setMovable(False)
+        self.addToolBar(toolbar)
+
+        accion_agregar = QAction("Añadir", self)
+        accion_importar = QAction("Importar Excel", self)
+        accion_refrescar = QAction("Actualizar", self)
+
+        accion_agregar.triggered.connect(self.abrir_formulario)
+        accion_importar.triggered.connect(self.importar_excel)
+        accion_refrescar.triggered.connect(self.cargar_contactos)
+
+        # Botones rápidos en la barra
+        toolbar.addAction(accion_agregar)
+        toolbar.addAction(accion_importar)
+        toolbar.addAction(accion_refrescar)
+
+        # Menú desplegable dentro de la barra
+        menu_acciones = QMenu("Acciones", self)
+        menu_acciones.addAction(accion_agregar)
+        menu_acciones.addAction(accion_importar)
+        menu_acciones.addAction(accion_refrescar)
+
+        boton_menu = QToolButton()
+        boton_menu.setText("Acciones")
+        boton_menu.setMenu(menu_acciones)
+        boton_menu.setPopupMode(QToolButton.InstantPopup)
+        toolbar.addWidget(boton_menu)
+
+    def _cargar_estilos(self):
+        ruta = Path(__file__).resolve().parents[2] / 'style' / 'app.qss'
+        try:
+            css = ruta.read_text(encoding='utf-8')
+            self.setStyleSheet(css)
+        except FileNotFoundError:
+            # Si no existe, continúa sin estilos.
+            pass
 
     def cargar_contactos(self):
 
@@ -206,6 +253,9 @@ class MainWindow(QMainWindow):
         
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Error durante la importación: {str(e)}")
+
+
+
 
 
 

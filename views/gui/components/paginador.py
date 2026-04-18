@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
 
 class Paginador(QWidget):
 
-    def __init__(self, on_change_callback=None, page_size_options=None, default_page_size=10):
+    def __init__(self, on_change_callback=None, page_size_options=None, default_page_size=20):
         super().__init__()
 
         self._on_change_callback = on_change_callback
