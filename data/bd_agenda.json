@@ -1,31 +1,4 @@
 {
-    "12": {
-        "nombre": "",
-        "apellido_1": "Javier",
-        "apellido_2": "Abascal Morte",
-        "direccion": {
-            "calle": "Castelló, 13- 1º Izda. Opera En Ruber",
-            "numero": "13",
-            "piso": "1",
-            "puerta": "",
-            "escalera": "",
-            "cp": "",
-            "provincia": ""
-        },
-        "info_contactos": {
-            "email": null,
-            "telefono_1": "914355282",
-            "telefono_2": null,
-            "telefono_3": null,
-            "telefono_4": null,
-            "nota_1": "-",
-            "nota_2": null,
-            "nota_3": null,
-            "nota_4": null,
-            "observaciones": "CIRUJANO GENERAL Y DIGESTIVO (Generali, Adeslas y MCS).",
-            "auxiliar": ""
-        }
-    },
     "13": {
         "nombre": "Abejon",
         "apellido_1": "",
