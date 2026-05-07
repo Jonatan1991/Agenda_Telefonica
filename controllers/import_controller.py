@@ -1,5 +1,5 @@
-import openpyxl
 import re
+import openpyxl
 from models.contacto_models import Contacto
 from models.direccion_models import Direccion
 from models.contacto_info_models import InfoContactos

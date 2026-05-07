@@ -5,7 +5,8 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QHBoxLayout,
-    QMessageBox
+    QMessageBox,
+    QTextEdit
 )
 
 from models.contacto_models import Contacto
@@ -21,8 +22,8 @@ class ContactoDialog(QDialog):
         self.controller = controller
         self.contacto = contacto
 
-        self.setWindowTitle("Nuevo contacto")
-        self.setMinimumSize(400, 600)
+        self.setWindowTitle("Nuevo contacto" if not contacto else "Editar contacto")
+        self.setMinimumSize(400, 900)
 
         self._crear_interfaz()
 
@@ -41,7 +42,8 @@ class ContactoDialog(QDialog):
         self.input_apellido_2 = QLineEdit()
         self.input_email = QLineEdit()
         self.input_telefono_1 = QLineEdit()
-        self.input_nota_1 = QLineEdit()
+        self.input_nota_1 = QTextEdit()
+        self.input_nota_1.setMaximumHeight(60)
 
         self.input_calle = QLineEdit()
         self.input_numero = QLineEdit()
@@ -52,15 +54,20 @@ class ContactoDialog(QDialog):
         self.input_provincia = QLineEdit()
 
         self.input_telefono_2 = QLineEdit()
-        self.input_nota_2 = QLineEdit()
+        self.input_nota_2 = QTextEdit()
+        self.input_nota_2.setMaximumHeight(60)
+        
         self.input_telefono_3 = QLineEdit()
-        self.input_nota_3 = QLineEdit()
+        self.input_nota_3 = QTextEdit()
+        self.input_nota_3.setMaximumHeight(60)
+        
         self.input_telefono_4 = QLineEdit()
-        self.input_nota_4 = QLineEdit()
+        self.input_nota_4 = QTextEdit()
+        self.input_nota_4.setMaximumHeight(60)
+        
         self.input_auxiliar = QLineEdit()
-        self.input_observaciones = QLineEdit()
-
-
+        self.input_observaciones = QTextEdit()
+        self.input_observaciones.setMinimumHeight(80)
 
         form.addRow("Nombre", self.input_nombre)
         form.addRow("Apellido 1", self.input_apellido_1)
@@ -85,8 +92,6 @@ class ContactoDialog(QDialog):
         form.addRow("Nota 4", self.input_nota_4)
         form.addRow("Auxiliar", self.input_auxiliar)
         form.addRow("Observaciones", self.input_observaciones)
-
-
 
         layout.addLayout(form)
 
@@ -118,15 +123,15 @@ class ContactoDialog(QDialog):
         info_contacto = InfoContactos(
             email=self.input_email.text(),
             telefono_1=self.input_telefono_1.text(),
-            nota_1=self.input_nota_1.text(),
+            nota_1=self.input_nota_1.toPlainText(),
             telefono_2=self.input_telefono_2.text(),
-            nota_2=self.input_nota_2.text(),
+            nota_2=self.input_nota_2.toPlainText(),
             telefono_3=self.input_telefono_3.text(),
-            nota_3=self.input_nota_3.text(),
+            nota_3=self.input_nota_3.toPlainText(),
             telefono_4=self.input_telefono_4.text(),
-            nota_4=self.input_nota_4.text(),
+            nota_4=self.input_nota_4.toPlainText(),
             auxiliar=self.input_auxiliar.text(),
-            observaciones=self.input_observaciones.text()
+            observaciones=self.input_observaciones.toPlainText()
         )
 
         direccion = Direccion(
@@ -181,20 +186,15 @@ class ContactoDialog(QDialog):
 
         self.input_email.setText(info_contactos.get("email", ""))
         self.input_telefono_1.setText(info_contactos.get("telefono_1", ""))
-        self.input_nota_1.setText(info_contactos.get("nota_1", ""))
+        self.input_nota_1.setPlainText(info_contactos.get("nota_1", ""))
         self.input_telefono_2.setText(info_contactos.get("telefono_2", ""))
-        self.input_nota_2.setText(info_contactos.get("nota_2", ""))
+        self.input_nota_2.setPlainText(info_contactos.get("nota_2", ""))
         self.input_telefono_3.setText(info_contactos.get("telefono_3", ""))
-        self.input_nota_3.setText(info_contactos.get("nota_3", ""))
+        self.input_nota_3.setPlainText(info_contactos.get("nota_3", ""))
         self.input_telefono_4.setText(info_contactos.get("telefono_4", ""))
-        self.input_nota_4.setText(info_contactos.get("nota_4", ""))
-        self.input_observaciones.setText(info_contactos.get("observaciones", ""))
+        self.input_nota_4.setPlainText(info_contactos.get("nota_4", ""))
+        self.input_observaciones.setPlainText(info_contactos.get("observaciones", ""))
         self.input_auxiliar.setText(info_contactos.get("auxiliar", ""))
-        self.input_telefono_4.setText(info_contactos.get("telefono_4", ""))
-        self.input_nota_4.setText(info_contactos.get("nota_4", ""))
-        self.input_auxiliar.setText(info_contactos.get("auxiliar", ""))
-        self.input_observaciones.setText(info_contactos.get("observaciones", ""))
-
 
         direccion = self.contacto.get("direccion", {})
 

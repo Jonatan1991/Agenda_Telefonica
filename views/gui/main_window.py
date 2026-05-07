@@ -7,6 +7,7 @@
     QMessageBox,
     QFileDialog
 )
+from PySide6.QtGui import QIcon
 from pathlib import Path
 
 from controllers.agenda_controller import AgendaController
@@ -26,7 +27,12 @@ class MainWindow(QMainWindow):
         self.controller = AgendaController()
 
         self.setWindowTitle("Agenda Telefónica")
-        self.setMinimumSize(1200, 800)    
+        self.setMinimumSize(1200, 800)
+        
+        # Cargar icono de la aplicación
+        ruta_icono = Path(__file__).resolve().parents[2] / 'agendaIcon.png'
+        if ruta_icono.exists():
+            self.setWindowIcon(QIcon(str(ruta_icono)))
             
         self._cargar_estilos()
 
