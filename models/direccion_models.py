@@ -11,7 +11,7 @@ class Direccion:
         self.provincia = capitalizar_texto(provincia)
 
     def to_dict(self):
-        return{
+        return {
             "calle": self.calle,
             "numero": self.numero,
             "piso": self.piso,

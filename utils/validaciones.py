@@ -40,6 +40,8 @@ def validar_telefono(telefono):
 
 def validar_email(email):
     """Valida el formato de un email."""
+    if not email or len(email.strip()) == 0:
+        raise ValueError("El email no puede estar vacío")
 
     patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 

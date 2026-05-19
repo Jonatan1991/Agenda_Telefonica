@@ -51,7 +51,7 @@ class TablaContactos(QTableWidget):
         # Calle y número juntos
         if direccion.get("calle"):
             calle_num = f"{direccion['calle']} {direccion.get('numero', '')}".strip()
-            partes.append(calle_num )
+            partes.append(calle_num)
         
         # Piso
         if direccion.get("piso"):
@@ -88,11 +88,10 @@ class TablaContactos(QTableWidget):
             direccion = datos.get("direccion", {})
             direccion_formato = self._formatear_direccion(direccion)
 
-            apellidos = f"{datos.get("apellido_1", "")} {datos.get("apellido_2", "")}"
+            apellidos = f"{datos.get('apellido_1', '')} {datos.get('apellido_2', '')}"
 
             info_contactos = datos.get("info_contactos", {})
 
-           
             self.setItem(fila, 0, QTableWidgetItem(str(id_contacto)))
             self.setItem(fila, 1, QTableWidgetItem(datos.get("nombre", "")))
             self.setItem(fila, 2, QTableWidgetItem(apellidos))

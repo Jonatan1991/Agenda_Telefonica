@@ -3,9 +3,9 @@ from models.contacto_info_models import InfoContactos
 
 class Contacto:
     def __init__(self, nombre, apellido_1, apellido_2, direccion, info_contactos=None):
-        self.nombre =nombre
-        self.apellido_1 =apellido_1
-        self.apellido_2 =apellido_2
+        self.nombre = nombre
+        self.apellido_1 = apellido_1
+        self.apellido_2 = apellido_2
         if isinstance(direccion, dict):
             direccion = Direccion.from_dict(direccion)
         self.direccion = direccion

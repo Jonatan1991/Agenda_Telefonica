@@ -86,36 +86,17 @@ class AgendaTelefonica:
         self.ultimo_id += 1
         id_contacto = str(self.ultimo_id)
 
-        # 🔹 Validación del nombre
-        # Validaciones externas
         contacto.nombre = validar_nombre(contacto.nombre)
         contacto.apellido_1 = validar_apellido(contacto.apellido_1)
         contacto.apellido_2 = validar_apellido(contacto.apellido_2)
-        # 🔹 Validación del telefono
-        # contacto.telefono = validar_telefono(contacto.telefono)
-        # 🔹 Validación del email
         if contacto.info_contactos:
-            contacto.info_contactos.email = validar_email(contacto.info_contactos.email)
             contacto.info_contactos.telefono_1 = validar_telefono(contacto.info_contactos.telefono_1) if contacto.info_contactos.telefono_1 else None
             contacto.info_contactos.telefono_2 = validar_telefono(contacto.info_contactos.telefono_2) if contacto.info_contactos.telefono_2 else None
             contacto.info_contactos.telefono_3 = validar_telefono(contacto.info_contactos.telefono_3) if contacto.info_contactos.telefono_3 else None
             contacto.info_contactos.telefono_4 = validar_telefono(contacto.info_contactos.telefono_4) if contacto.info_contactos.telefono_4 else None
             contacto.info_contactos.email = validar_email(contacto.info_contactos.email) if contacto.info_contactos.email else None
-        
 
-        
-        
-        # Creamos el contacto
-        # self.contactos[id_contacto] = {
-        #     "nombre": nombre,
-        #     "telefono": telefono,
-        #     "email": email,
-        #     "direccion": direccion,
-        # }
-
-        #aqui cambio todo porque uso el modelo Contacto, 
-        # donde converti a contacto en un objeto el cual me quita un millon de codigo y es lo mas correcto
-        self.contactos[id_contacto] = contacto.to_dict() #y aqui lo convierto en un diccionario para poderlo guardar en el jSon
+        self.contactos[id_contacto] = contacto.to_dict()
 
         # Guardamos cambios
         self.guardar()

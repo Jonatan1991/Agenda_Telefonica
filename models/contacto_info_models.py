@@ -1,7 +1,5 @@
-from utils.formateadores import capitalizar_texto
-
 class InfoContactos:
-    def __init__(self, email, telefono_1, telefono_2, telefono_3, telefono_4, nota_1, nota_2, nota_3, nota_4, observaciones, auxiliar, ):
+    def __init__(self, email, telefono_1, telefono_2, telefono_3, telefono_4, nota_1, nota_2, nota_3, nota_4, observaciones, auxiliar):
         self.email = email
         self.telefono_1 = telefono_1
         self.telefono_2 = telefono_2
